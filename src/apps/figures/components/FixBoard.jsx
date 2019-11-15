@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Grid, Typography} from '@material-ui/core';
 
-import {FIX_BOARD_CELLS} from '../constants';
+import {FIX_BOARD_CELLS} from '../figuresconstants';
 import Cell from './FixBoardCell';
 import {useStyles} from './FixBoard.css';
 

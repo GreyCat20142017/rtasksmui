@@ -1,8 +1,6 @@
-import {colorArray, DEFAULT_COLOR} from './theme';
-import {sample} from 'lodash';
+import {APP_ROOT,  TASKS} from './constants';
 
-export const getRandomColor = () => (
-    Array.isArray(colorArray) && colorArray.length > 0 ?
-        sample(colorArray) :
-        DEFAULT_COLOR
-);
+export const taskSearch = (href) => {
+    const result = Object.entries(TASKS).find(task => APP_ROOT + task[1].href === href);
+    return Array.isArray(result)  ? result[0] : 'MAIN';
+};

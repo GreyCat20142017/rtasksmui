@@ -6,7 +6,7 @@ import {Grid, Paper} from '@material-ui/core';
 import {Skeleton} from '@material-ui/lab';
 
 import DraggableFigure from './DraggableFigure';
-import {DND_TYPES, MIN_SIDE_SIZE} from '../constants';
+import {DND_TYPES, MIN_SIDE_SIZE} from '../figuresconstants';
 
 const Cell = ({classes = {}, cell, fixed, addFixed, ind}) => {
 

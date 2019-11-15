@@ -6,8 +6,8 @@ import {Button, ButtonGroup, Paper} from '@material-ui/core';
 import DraggableFigure from './DraggableFigure';
 import EmptyFigure from './EmptyFigure';
 import TrashBin from './TrashBin';
-import {FIGURE_TYPES, MAX_SIDE_RATIO, MIN_SIDE_SIZE} from '../constants';
-import {getRandomColor} from '../functions';
+import {FIGURE_TYPES, MAX_SIDE_RATIO, MIN_SIDE_SIZE} from '../figuresconstants';
+import {getRandomColor} from '../figuresfunctions';
 
 const FiguresCreator = ({classes = {}, last = null, setLast, deleteFigure, deleteFixed}) => {
 

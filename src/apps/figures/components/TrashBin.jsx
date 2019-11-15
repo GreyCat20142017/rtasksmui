@@ -5,7 +5,7 @@ import {useDrop} from 'react-dnd';
 import {IconButton, Tooltip} from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import {DND_TYPES} from '../constants';
+import {DND_TYPES} from '../figuresconstants';
 
 const TrashBin = ({classes, deleteFigure, deleteFixed}) => {
 

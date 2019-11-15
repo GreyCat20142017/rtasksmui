@@ -1,5 +1,5 @@
 import {makeStyles} from '@material-ui/core';
-import {BACK_COLOR} from '../theme';
+import {BACK_COLOR} from '../../../theme';
 
 export const useStyles = makeStyles(theme => ({
     root: {

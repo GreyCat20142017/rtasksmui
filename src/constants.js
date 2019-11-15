@@ -1,20 +1,29 @@
-export const FIGURE_TYPES = {
-    SQUARE: 'square',
-    RECTANGLE: 'rectangle'
-};
+const url = window.location.origin;
+export const APP_ROOT = ((url.match(/github\.io/gi)) ? '/figures' : '');
 
-export const MAX_SIDE_RATIO = 2;
-export const MIN_SIDE_SIZE = 70;
+export const TASKS = {
+    MAIN: {
+        title: 'Главная',
+        component: null,
+        comment: 'Тренировка на котиках. React (hooks) - CRA + Material UI-4x, chart.js, React-DnD, hookrouter',
+        href: '/'
+    },
 
-export const DND_TYPES = {FIGURE : ' FIGURE'};
+    FIGURES: {
+        title: 'Figures',
+        component: 'AppFigures',
+        comment: 'React DnD',
+        href: '/figures'
+    },
 
-export const FIX_BOARD_CELLS = [
-    {xs: 12, sm: 4},
-    {xs: 12, sm: 4},
-    {xs: 12, sm: 4},
-    {xs: 6, sm: 3},
-    {xs: 6, sm: 3},
-    {xs: 6, sm: 3},
-    {xs: 6, sm: 3}
-];
+    IT: {
+        title: 'ChartJS',
+        component: 'AppIt',
+        comment: '"Есть ли жизнь в ИТ?" - график по данным о количестве вакансий с сайта Мой круг (в некоторые дни осени 2019)"',
+        href: '/it'
+    },
+}
 
+export const TASKS_ORDER = [...Object.keys(TASKS).map(key => TASKS[key])];
+
+export const SNACK_OPEN_TIME = 7000;

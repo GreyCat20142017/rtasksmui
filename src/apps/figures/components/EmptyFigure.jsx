@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {Paper, Tooltip} from '@material-ui/core';
 
-import {MIN_SIDE_SIZE} from '../constants';
+import {MIN_SIDE_SIZE} from '../figuresconstants';
 
 /**
  * Вариант onBoard для пустой фигуры оставлен для варианта сетки с возможностью добавления в последнюю пустую ячейку

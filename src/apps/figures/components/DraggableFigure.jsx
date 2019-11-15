@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import {useDrag} from 'react-dnd';
 import {Paper, Tooltip} from '@material-ui/core';
 
-import {DND_TYPES, MIN_SIDE_SIZE} from '../constants';
-import {DEFAULT_COLOR} from '../theme';
+import {DND_TYPES, MIN_SIDE_SIZE} from '../figuresconstants';
+import {DEFAULT_COLOR} from '../../../theme';
 
 const DraggableFigure = ({
                                     width = MIN_SIDE_SIZE,
