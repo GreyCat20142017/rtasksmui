@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/core/styles';
 import {MIN_SIDE_SIZE} from './apps/figures/figuresconstants';
-import {BACK_COLOR} from './theme';
+import {BACK_COLOR, PINK_COLOR} from './theme';
 
 export const useStyles = makeStyles(theme => ({
     app: {
@@ -48,7 +48,7 @@ export const useStyles = makeStyles(theme => ({
     },
     active: {
         textDecoration: 'none',
-        color: 'rgba(250, 160, 0)'
+        color: PINK_COLOR
     },
     normal: {
         textDecoration: 'none',

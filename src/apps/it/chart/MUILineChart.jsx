@@ -4,8 +4,9 @@ import {Chart} from 'chart.js';
 import {Typography, Divider} from '@material-ui/core';
 
 import {CHART_CANVAS} from '../chartconstants';
+import {getChartOptions} from '../chartfunctions';
 
-const MUILineChart = ({chart, setChart, data = [], chartTitle, chartFooter, onLegendClick}) => {
+const MUILineChart = ({chart, setChart, data = [], chartTitle, chartFooter, onLegendClick, minY = 0}) => {
         const canvas = useRef(null);
 
         useEffect(() => {
@@ -19,6 +20,15 @@ const MUILineChart = ({chart, setChart, data = [], chartTitle, chartFooter, onLe
 
             drawChart();
         }, [chart, setChart, data]);
+
+        useEffect(() => {
+            if (chart) {
+                chart.data.labels = [...data.data.labels];
+                chart.data.datasets = [...data.data.datasets];
+                chart.options= getChartOptions(minY);
+                chart.update();
+            }
+        }, [chart, data, minY, setChart]);
 
 
         useEffect(() => {
@@ -37,7 +47,7 @@ const MUILineChart = ({chart, setChart, data = [], chartTitle, chartFooter, onLe
 
         return (
             <>
-                <Typography variant={'h5'}>{chartTitle}</Typography>
+                <Typography variant={'h6'}>{chartTitle}</Typography>
                 <canvas ref={canvas} id={CHART_CANVAS.id} width={CHART_CANVAS.width} height={CHART_CANVAS.height}></canvas>
                 <Divider/>
                 <Typography>{chartFooter}</Typography>

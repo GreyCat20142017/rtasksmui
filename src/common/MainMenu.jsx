@@ -3,7 +3,7 @@ import {Button} from '@material-ui/core';
 import {A} from 'hookrouter';
 import {TASKS_ORDER} from '../constants';
 
-export const MainMenu = ({classes, active, setActive}) => (
+const MainMenu = ({classes, active, setActive}) => (
     <>
         {TASKS_ORDER.map((item, ind) =>
             <A className={TASKS_ORDER[ind]['href'] === active ? classes.active : classes.normal}
@@ -17,3 +17,5 @@ export const MainMenu = ({classes, active, setActive}) => (
         )}
     </>
 );
+
+export default MainMenu;

@@ -1,4 +1,6 @@
 import {CHART_COLORS} from './chartconstants';
+import {DICTIONARY, LABELS_LIMIT} from '../../constants';
+import {MDB_COLOR} from '../../theme';
 
 // const isDigit = (str) => (str.match(/[0-9]/));
 //
@@ -23,43 +25,52 @@ export const transformToChartData = (sourceData) => {
 
 export const dayMonth = (strDate) => {
     const dateArray = strDate.split('-');
-    return dateArray.length === 3 ? dateArray[2] + '.' + dateArray[1] + '.' + dateArray[0] : ''
+    return dateArray.length === 3 ? dateArray[2] + '.' + dateArray[1] + '.' + dateArray[0] : '';
 };
 
-export const getPreparedData = (data) => {
+export const getTranslate = (word, dictionary = DICTIONARY) => (dictionary[word] ? dictionary[word] : word);
 
-    const datasets = [
-        {
-            label: 'Всего',
-            data: data.map(row => row.total),
-            opacity: 0.5,
-            backgroundColor: CHART_COLORS[0]
-        },
-        {
-            label: 'Удаленка',
-            data: data.map(row => row.remote),
-            backgroundColor: CHART_COLORS[1]
-        }
-    ];
+const getChartDatasets = (data, columns) => {
+    const datasets = [];
+    columns.forEach((column, ind) => {
+        datasets.push(
+            {
+                label: getTranslate(column),
+                data: data ? data.map(row => row[column]) : [],
+                opacity: (ind === 0) ? 0.5 : 1,
+                backgroundColor: CHART_COLORS[ind] ? CHART_COLORS[ind] : MDB_COLOR
+            }
+        );
+    });
+    return datasets;
+};
+
+export const getChartOptions = (minY) => ({
+    maintainAspectRatio: true,
+    pointHoverRadius: 10,
+    scales: {
+        yAxes: [{
+            ticks: {min: minY}
+        }]
+    }
+});
+
+export const getPreparedData = (data, columns, minY = 0) => {
+
+    const datasets = getChartDatasets(data, columns);
 
     const chartData = {
-        labels: data.map(row => [dayMonth(row.date) + ':',  row.resume , 'резюме']),
+        labels: data ? data.map(
+            row => data.length > LABELS_LIMIT ? '' : [dayMonth(row.date) + ':', row.resume, 'резюме']) : [],
         datasets: datasets
     };
 
     return ({
         data: chartData,
         type: 'line',
-        options: {
-            maintainAspectRatio: true,
-            pointHoverRadius: 10,
-            scales: {
-                yAxes: [{
-                    ticks: {beginAtZero: true}
-                }]
-            }
-        }
+        options: getChartOptions(minY)
     });
 };
+
 
 export const NF = new Intl.NumberFormat('ru-RU');
