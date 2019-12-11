@@ -3,8 +3,8 @@ import {Chart} from 'chart.js';
 
 import {Typography, Divider} from '@material-ui/core';
 
-import {CHART_CANVAS} from '../chartconstants';
-import {getChartOptions} from '../chartfunctions';
+import {CHART_CANVAS} from './chartconstants';
+import {getChartOptions} from './chartfunctions';
 
 const MUILineChart = ({chart, setChart, data = [], chartTitle, chartFooter, onLegendClick, minY = 0}) => {
         const canvas = useRef(null);

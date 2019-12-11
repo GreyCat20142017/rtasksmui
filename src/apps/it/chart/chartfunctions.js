@@ -1,12 +1,6 @@
 import {CHART_COLORS} from './chartconstants';
-import {DICTIONARY, LABELS_LIMIT} from '../../constants';
-import {MDB_COLOR} from '../../theme';
-
-// const isDigit = (str) => (str.match(/[0-9]/));
-//
-// const getDark = (colors) => (colors.map(color =>
-//         (color.substring(0, color.lastIndexOf(',')) + ', 1)'))
-// );
+import {DICTIONARY, LABELS_LIMIT} from '../../../constants';
+import {MDB_COLOR} from '../../../theme';
 
 export const transformToChartData = (sourceData) => {
     return ({
@@ -71,6 +65,5 @@ export const getPreparedData = (data, columns, minY = 0) => {
         options: getChartOptions(minY)
     });
 };
-
 
 export const NF = new Intl.NumberFormat('ru-RU');

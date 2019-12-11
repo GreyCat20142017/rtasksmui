@@ -1,10 +1,10 @@
 import React from 'react';
 import {useRoutes} from 'hookrouter';
 
-import {TASKS} from './constants';
-import {routes} from './routes';
-import {taskSearch} from './functions';
-import NotFound from './common/NotFound';
+import {TASKS} from '../constants';
+import {routes} from '../routes';
+import {taskSearch} from '../functions';
+import NotFound from '../common/NotFound';
 
 
 const AppSwitcher = () => {

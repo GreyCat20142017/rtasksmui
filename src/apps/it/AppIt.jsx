@@ -1,24 +1,27 @@
 import React, {useState} from 'react';
 import {Tabs, Tab, Typography} from '@material-ui/core';
 
-import ItChart from './ItChart';
-import ItTable from './ItTable';
+import ItChart from './components/ItChart';
+import ItTable from './components/ItTable';
+import ItLSTable from './components/ItLsTable';
 
-const TabContent = ({index, data}) => {
-    const minY = index === 2 ? Math.min(...data.map(item => item['resume'])) : 0;
+const TabContent = ({index, data, lsData}) => {
+    const minY = index === 3 ? Math.min(...data.map(item => item['resume'])) : 0;
     switch (index) {
         case  0:
-            return <ItTable data={data}/>;
+            return <ItLSTable data={lsData}/>;
         case  1:
-            return <ItChart data={data} columns={['total', 'remote']} chartTitle={'График по числу вакансий'}/>;
+            return <ItTable data={data}/>;
         case  2:
-            return <ItChart data={data} columns={['resume']} minY={minY} chartTitle={'График по числу резюме'}/>;
+            return <ItChart data={data} columns={['total', 'remote']} chartTitle={'График по количеству вакансий'}/>;
+        case  3:
+            return <ItChart data={data} columns={['resume']} minY={minY} chartTitle={'График по количеству резюме'}/>;
         default:
     }
     return <Typography color='primary' variant='caption'>Нет данных</Typography>;
 };
 
-const AppIt = ({data}) => {
+const AppIt = ({data, lsData}) => {
     const [activeTab, setActiveTab] = useState(0);
     const onTabChange = (evt, newActive) => {
         setActiveTab(newActive);
@@ -32,10 +35,11 @@ const AppIt = ({data}) => {
                 onChange={onTabChange}
             >
                 <Tab label="Таблица"/>
-                <Tab label="График (вакансии)"/>
-                <Tab label="График (резюме)"/>
+                <Tab label="Таблица по умолчанию"/>
+                <Tab label="Вакансии"/>
+                <Tab label="Резюме"/>
             </Tabs>
-            <TabContent index={activeTab} data={data}/>
+            <TabContent index={activeTab} data={[...data, ...lsData]} lsData={lsData}/>
         </>
     );
 };

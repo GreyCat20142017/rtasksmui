@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Typography, Divider, TablePagination} from '@material-ui/core';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 
-import MUILineChart from './chart/MUILineChart';
-import SimpleSnackbar from '../../common/SimpleSnackbar';
-import {getPreparedData, NF} from './chartfunctions';
-import {POINT_LIMIT, ROWS_PER_PAGE_OPTIONS} from '../../constants';
+import MUILineChart from '../chart/MUILineChart';
+import SimpleSnackbar from '../../../common/SimpleSnackbar';
+import {getPreparedData, NF} from '../chart/chartfunctions';
+import {POINT_LIMIT, ROWS_PER_PAGE_OPTIONS} from '../../../constants';
 
 const getMessage = (row) => (
     row ?
@@ -19,7 +19,7 @@ const getMessage = (row) => (
         null
 );
 
-const ItChart = ({data, columns, chartTitle= 'График', minY = 0}) => {
+const ItChart = ({data, columns, chartTitle = 'График', minY = 0}) => {
     const [message, setMessage] = useState(null);
     const [chart, setChart] = useState(null);
     const [page, setPage] = useState(0);
@@ -60,7 +60,8 @@ const ItChart = ({data, columns, chartTitle= 'График', minY = 0}) => {
                           chartTitle={chartTitle}
                           chartFooter={''}
                           onLegendClick={onLegendClick}
-                          hidden={false}/>
+                          hidden={false}
+            />
             <SimpleSnackbar open={!!(message)} message={message} onSnackClose={onSnackClose}/>
             <Typography variant={'caption'}>
                 Для просмотра детальной информации по одной точке графика нужно кликнуть по ней мышью
