@@ -1,12 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
 
-import AppIt from '../apps/it/AppIt';
+import IT from '../pages/it/IT';
 import {DEFAULT_IT_URL} from '../constants';
-import LSContext from '../LSContext';
 
 const AppItContainer = () => {
     const [data, setData] = useState([]);
-    const {lsData} = useContext(LSContext);
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -23,7 +21,7 @@ const AppItContainer = () => {
 
     return (
         <>
-            <AppIt data={data} lsData={lsData}/>
+            <IT data={data} lsData={[]}/>
             <p>{error}</p>
         </>
     );

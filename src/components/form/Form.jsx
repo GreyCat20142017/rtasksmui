@@ -1,58 +1,53 @@
-import React, {useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import useForm from 'react-hook-form';
 
 import {Button, TextField, Typography} from '@material-ui/core';
-import {isData, isValidIndex, saveDataToLocalStorage} from '../../functions';
-import {IT_COLUMNS_ERRORS, LS_FLAG} from '../../constants';
-import LSContext from '../../LSContext';
+import {IT_COLUMNS_ERRORS} from '../../constants';
+import {MobileDatePicker as DatePicker} from '@material-ui/pickers';
 
 const getCurrentDate = () => {
-    const currentDate = new Date();
-    return currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+    return new Date();
 };
 
-const getEdited = (data, index, field) => (isData(data) && isValidIndex(index, data) ? data[index][field] || '' : '');
 
 const isError = (errors, fieldName) => (!!(errors && errors[fieldName]));
 
 const getErrorMessages = (errors) => (
-    Object.keys(errors).map(key =>  IT_COLUMNS_ERRORS[key] || '').join(', ')
+    Object.keys(errors).map(key => IT_COLUMNS_ERRORS[key] || '').join(', ')
 );
 
-const Form = ({edited = null, onDialogClose}) => {
+const stringifyDate = (date) => (
+    (date.getFullYear() + '-' +
+    (date.getMonth()+ 1).toString().padStart(2, '0') + '-' +
+    date.getDate().toString().padStart(2, '0')).slice(0, 10)
+);
+
+const Form = ({edited = null, onSave}) => {
     const {register, handleSubmit, errors} = useForm();
-    const {lsData, setLsData} = useContext(LSContext);
+    const [date, setDate] = useState(getCurrentDate());
 
-    const getStateAfterCreate = (element) => (
-        [...lsData, {...element, [LS_FLAG]: true}]
-    );
+    useEffect(() => {
+        setDate(edited ? edited['date'] : getCurrentDate());
+    }, [edited]);
 
-    const getStateAfterEdit = (element, edited) => {
-        const newData = [...lsData];
-        newData[edited.index] = {...element, [LS_FLAG]: true};
-        return newData;
-    };
 
     const onSubmit = element => {
-        const newData = edited ? getStateAfterEdit(element, edited) : getStateAfterCreate(element);
-        setLsData(newData);
-        saveDataToLocalStorage(newData);
-        onDialogClose();
+        const el = edited ? {...element, date: stringifyDate(date), id: edited['id']} : {...element, date: stringifyDate(date)};
+        onSave(el);
     };
+
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField name='date' inputRef={register({required: true})} error={isError(errors, 'date')}
-                       defaultValue={edited ? getEdited(lsData, edited.index, 'date') : getCurrentDate()}
-                       margin='dense' id='date' type='date' fullWidth/>
+            <DatePicker value={date}  name={'date'} id='date' onChange={(dd) => setDate(dd)}/>
             <TextField name='total' inputRef={register({required: true, min: 0})} error={isError(errors, 'total')}
-                       defaultValue={edited ? getEdited(lsData, edited.index, 'total') : ''}
+                       defaultValue={edited ? edited['total'] : ''}
                        autoFocus margin='dense' id='total' label='Всего вакансий' type='number' fullWidth/>
-            <TextField name='remote' inputRef={register({required: true, min: 0})}  error={isError(errors, 'remote')}
-                       defaultValue={edited ? getEdited(lsData, edited.index, 'remote') : ''}
+            <TextField name='remote' inputRef={register({required: true, min: 0})} error={isError(errors, 'remote')}
+                       defaultValue={edited ? edited['remote'] : ''}
                        margin='dense' id='remote' label='Удаленка' type='number' fullWidth/>
-            <TextField name='resume' inputRef={register({required: true, min: 0})}  error={isError(errors, 'resume')}
-                       defaultValue={edited ? getEdited(lsData, edited.index, 'resume') : ''}
+            <TextField name='resume' inputRef={register({required: true, min: 0})} error={isError(errors, 'resume')}
+                       defaultValue={edited ? edited['resume'] : ''}
                        margin='dense' id='resume' label='Резюме' type='number' fullWidth/>
             <Typography variant='caption' color='error' style={{marginBottom: '10px'}}>
                 {getErrorMessages(errors)}
@@ -60,7 +55,6 @@ const Form = ({edited = null, onDialogClose}) => {
             <Button type='submit' color='primary' variant='contained' fullWidth title='сохранить и закрыть'>
                 сохранить
             </Button>
-
         </form>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, TableCell} from '@material-ui/core';
-import MUIIcon from '../../../components/icon/MUIIcon';
+import {MUIIcon} from '../../../components/icon/MUIIcon';
 
 const ActionsCells = ({actions, rowInd}) => {
     const onButtonClick = (actions, key, rowInd) => {

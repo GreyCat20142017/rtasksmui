@@ -3,11 +3,11 @@ import React from 'react';
 import {
     Home, Settings, Search, CloudQueue as Sky, Info, MoreVert as More, HelpOutline as Help, Menu,
     MusicNote as MusicOn, MusicOff, QueueMusic as List, Close, PlaylistPlay, PlaylistAdd, Pets,
-    MenuOpen as SelectList, Delete, Edit
+    MenuOpen as SelectList, Delete, Edit, PersonPinCircle as User
 } from '@material-ui/icons';
 
 
-const MUIIcon = ({icon, iconSize = 'small'}) => {
+export const MUIIcon = ({icon, iconSize = 'small'}) => {
     switch (icon) {
         case 'Menu':
             return <Menu fontSize={iconSize}/>;
@@ -45,9 +45,9 @@ const MUIIcon = ({icon, iconSize = 'small'}) => {
             return <Delete fontSize={iconSize}/>;
         case 'Edit':
             return <Edit fontSize={iconSize}/>;
+        case 'User':
+            return <User fontSize={iconSize}/>;
         default:
     }
     return null;
 };
-
-export default MUIIcon;

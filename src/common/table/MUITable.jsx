@@ -4,7 +4,7 @@ import {Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow
 import {theme} from '../../theme';
 import ActionsHeaders from './actions/ActionsHeaders';
 import ActionsCells from './actions/ActionsCells';
-import {getTranslate, NF} from '../../apps/it/chart/chartfunctions';
+import {getTranslate, NF} from '../../components/chart/chartfunctions';
 import {ROWS_PER_PAGE_OPTIONS} from '../../constants';
 
 const useStyles = () => makeStyles({

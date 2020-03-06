@@ -1,57 +1,43 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {ThemeProvider} from '@material-ui/styles';
-import {AppBar, Container, Divider, Paper, Toolbar, Typography, CssBaseline, Hidden} from '@material-ui/core';
+import {Container, CssBaseline} from '@material-ui/core';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import ruLocale from 'date-fns/locale/ru';
 
-import AppSwitcher from './apps/AppSwitcher';
-import Submenu from './components/submenu/Submenu';
-import MainMenu from './common/MainMenu';
-import {TASKS_ORDER} from './constants';
+import AppSwitcher from './pages/AppSwitcher';
+import {Header, Footer} from './components/components';
+import {UserContextProvider} from './contexts/user/UserContext';
+import {DataContextProvider} from './contexts/data/DataContext';
+import {UserChecker} from './services/UserChecker';
 import {theme} from './theme';
 import {useStyles} from './App.css';
 
-import LSContext from './LSContext';
-import {getDataFromLocalStorage} from './functions';
+const localeMap = {
+    ru: ruLocale,
+};
 
 const App = () => {
     const classes = useStyles();
-    const [active, setActive] = useState(window.location.pathname);
-    const [lsData, setLsData] = useState(getDataFromLocalStorage());
-
-    const submenuItems = TASKS_ORDER.map((item, ind) => ({
-        text: item.title,
-        href: item.href,
-        key: ind
-    }));
 
     return (
         <>
             <CssBaseline/>
-            <LSContext.Provider value={{lsData, setLsData}}>
-                <ThemeProvider theme={theme}>
-                    <Container className={classes.app}>
-                        <AppBar position='static'>
-                            <Toolbar>
-                                <Submenu submenuItems={submenuItems} withNavLink={true} switchIcon={'Menu'}/>
-                                <Typography variant='h6' className={classes.title}>
-                                    Rtasks + MUI
-                                </Typography>
-                                <Divider className={classes.firstButton}/>
-                                <Hidden mdDown>
-                                    <MainMenu classes={classes} active={active} setActive={setActive}/>
-                                </Hidden>
-                            </Toolbar>
-                        </AppBar>
-                        <Paper className={classes.paperMain}>
-                            <h3>Rtasks c использованием Material-UI</h3>
-                            <AppSwitcher/>
-                        </Paper>
-                        <AppBar position='static'>
-                            <Toolbar>
-                            </Toolbar>
-                        </AppBar>
-                    </Container>
-                </ThemeProvider>
-            </LSContext.Provider>
+            <MuiPickersUtilsProvider utils={DateFnsUtils} locale={localeMap['ru']}>
+                <UserContextProvider>
+                    <UserChecker>
+                    <DataContextProvider>
+                        <ThemeProvider theme={theme}>
+                            <Container className={classes.app}>
+                                <Header/>
+                                <AppSwitcher classes={classes}/>
+                                <Footer/>
+                            </Container>
+                        </ThemeProvider>
+                    </DataContextProvider>
+                    </UserChecker>
+                </UserContextProvider>
+            </MuiPickersUtilsProvider>
         </>
     );
 };

@@ -5,12 +5,8 @@ import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} fr
 
 import Form from './Form';
 
-const FormDialog = ({isFormOpen = false, setIsFormOpen, edited = null, setEdited}) => {
+const FormDialog = ({isFormOpen = false, edited = null, onClose, onSave}) => {
 
-    const onClose = () => {
-        setIsFormOpen(false);
-        setEdited(null);
-    };
 
     return (
         <Dialog open={isFormOpen} onClose={onClose} aria-labelledby='form-dialog-title'>
@@ -23,7 +19,7 @@ const FormDialog = ({isFormOpen = false, setIsFormOpen, edited = null, setEdited
                     </Typography>
                 </DialogContentText>
                 <Divider/>
-                <Form edited={edited} onDialogClose={onClose}/>
+                <Form edited={edited} onSave={onSave}/>
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} color='primary' fullWidth

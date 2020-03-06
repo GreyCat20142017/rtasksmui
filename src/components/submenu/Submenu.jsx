@@ -1,51 +1,45 @@
 import React, {useState} from 'react';
-import {navigate, usePath} from 'hookrouter';
-import {Button, Menu, MenuItem} from '@material-ui/core';
+import {NavLink} from 'react-router-dom';
+import {Menu, MenuItem, Button} from '@material-ui/core';
 
-import MUIIcon from '../icon/MUIIcon';
-import {DARKPINK_COLOR} from '../../theme';
-import {useStyles} from '../../App.css';
+import {MUIIcon} from '../icon/MUIIcon';
+import {DARKPINK_COLOR, PINK_COLOR} from '../../theme';
+import {useStyles} from './Submenu.css';
 
 const Submenu = ({
                      submenuItems = [], withNavLink = true, onLight = true, callback = null,
                      switchIcon = 'More', text = ''
                  }) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const path = usePath();
     const classes = useStyles();
 
-    const convertedItems = submenuItems.map(item => (typeof (item) === 'object' ? item : ({
+    const linkClass = onLight ? classes.linkDark : classes.link;
+    const activeColor = onLight ? DARKPINK_COLOR : PINK_COLOR;
+    const convertedItems = submenuItems.map(item => (typeof(item) === 'object' ? item : ({
         'href': item,
         'text': item,
         'key': item
     })));
 
-    const handleClick = event => {
-        setAnchorEl(event.currentTarget);
+    const handleClick = evt => {
+        evt.preventDefault();
+        setAnchorEl(evt.currentTarget);
     };
 
-    const handleClose = (key) => {
+    const handleClose = (evt, key) => {
         setAnchorEl(null);
         if (callback && key) {
             callback(key);
         }
     };
 
-    const handleCloseNavigate = (href) => {
-        setAnchorEl(null);
-        navigate(href);
-    };
-
-    const handleCloseCommon = (link, withNavLink) => (
-        withNavLink ? handleCloseNavigate(link['href']) : handleClose(link['key'])
-    );
-
     return (
         <>
-            <Button color={'inherit'}
+            <Button color={'inherit'} title={text}
                     aria-controls='submenu' aria-haspopup='true' onClick={handleClick}
                     disabled={submenuItems.length === 0}>
                 <MUIIcon icon={switchIcon}/>
+
             </Button>
             <Menu className={classes.submenu}
                   id='submenu'
@@ -55,12 +49,21 @@ const Submenu = ({
                   onClose={handleClose}
             >
                 {convertedItems.map((link, ind) =>
-                    <MenuItem key={ind} title={link.text} onClick={() => handleCloseCommon(link, withNavLink)}>
-                        <MUIIcon icon={link.icon}/>
-                        <span>&nbsp;</span>
-                        <span style={{color: path === link['href'] ? DARKPINK_COLOR : 'inherit'}}>{link.text}</span>
-                    </MenuItem>
-                )}
+                    (withNavLink ?
+                            <NavLink className={linkClass} key={ind} exact={link.exact} to={link.href}
+                                     activeStyle={{color: activeColor}}>
+                                <MenuItem key={ind} title={link.text} onClick={() => handleClose(link.key)}>
+                                    <MUIIcon icon={link.icon}/>
+                                    <span>&nbsp;</span>
+                                    <span>{link.text}</span>
+                                </MenuItem>
+                            </NavLink> :
+                            <MenuItem key={ind} title={link.text} onClick={(evt) => handleClose(evt, link.key)}>
+                                <MUIIcon icon={link.icon}/>
+                                <span>&nbsp;</span>
+                                <span>{link.text}</span>
+                            </MenuItem>
+                    ))}
 
             </Menu>
         </>
