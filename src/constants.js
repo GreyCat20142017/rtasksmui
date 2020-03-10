@@ -27,6 +27,7 @@ export const DEFAULT_IT_URL = APP_ROOT + '/data/it.json';
 export const ROWS_LIMIT = 10;
 export const POINT_LIMIT = 50;
 export const LABELS_LIMIT = 5;
+export const MARKS_LIMIT = 5;
 export const ROWS_PER_PAGE_OPTIONS = [5, 10, 15, 50];
 
 export const DICTIONARY = {

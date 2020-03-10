@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import {Button, TextField, Typography} from '@material-ui/core';
+import {MobileDatePicker as DatePicker} from '@material-ui/pickers';
 import useForm from 'react-hook-form';
 
-import {Button, TextField, Typography} from '@material-ui/core';
 import {IT_COLUMNS_ERRORS} from '../../constants';
-import {MobileDatePicker as DatePicker} from '@material-ui/pickers';
 
 const getCurrentDate = () => {
     return new Date();
 };
-
 
 const isError = (errors, fieldName) => (!!(errors && errors[fieldName]));
 
@@ -22,7 +21,7 @@ const stringifyDate = (date) => (
     date.getDate().toString().padStart(2, '0')).slice(0, 10)
 );
 
-const Form = ({edited = null, onSave}) => {
+export const Form = ({edited = null, onSave}) => {
     const {register, handleSubmit, errors} = useForm();
     const [date, setDate] = useState(getCurrentDate());
 
@@ -30,12 +29,10 @@ const Form = ({edited = null, onSave}) => {
         setDate(edited ? edited['date'] : getCurrentDate());
     }, [edited]);
 
-
     const onSubmit = element => {
         const el = edited ? {...element, date: stringifyDate(date), id: edited['id']} : {...element, date: stringifyDate(date)};
         onSave(el);
     };
-
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,6 +55,3 @@ const Form = ({edited = null, onSave}) => {
         </form>
     );
 };
-
-
-export default Form;

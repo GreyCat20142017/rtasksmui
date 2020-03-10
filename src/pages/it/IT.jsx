@@ -1,12 +1,9 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useMemo} from 'react';
 import {Tabs, Tab, Typography} from '@material-ui/core';
 
-import ItChart from '../../components/chart/ItChart';
-import ItTable from '../../components/table/ItTable';
-import ItLSTable from '../../components/table/ItLsTable';
-
-import {defaultData} from './it';
+import {ItChart, ItResult, ItTable, ItLSTable} from '../../components/parts';
 import {DataContext} from '../../contexts/data/DataContext';
+import {defaultData} from './it';
 
 const TabContent = ({index, data}) => {
     const minY = index === 3 ? Math.min(...data.map(item => item['resume'])) : 0;
@@ -20,18 +17,23 @@ const TabContent = ({index, data}) => {
         case  3:
             return <ItChart data={data} columns={['resume']} minY={minY} chartTitle={'График по количеству резюме'}/>;
         case  4:
-            return <Typography>Печальная правда</Typography>
+            return <ItResult data={data}/>
         default:
     }
     return <Typography color='primary' variant='caption'>Нет данных</Typography>;
 };
 
-export const IT = () => {
+const IT = () => {
     const [activeTab, setActiveTab] = useState(0);
     const {dbData} = useContext(DataContext);
     const onTabChange = (evt, newActive) => {
         setActiveTab(newActive);
     };
+
+    const sortedData = useMemo(() => (
+        [...defaultData, ...dbData].sort((a, b) => (a['date'] > b['date'] ? 1 : -1))
+    ), [dbData]);
+
     return (
         <>
             <Tabs
@@ -40,13 +42,18 @@ export const IT = () => {
                 textColor="primary"
                 onChange={onTabChange}
             >
-                <Tab label="Изменение данных"/>
+                <Tab label="Данные"/>
                 <Tab label="Таблица"/>
                 <Tab label="Вакансии"/>
                 <Tab label="Резюме"/>
                 <Tab label="Итоги"/>
             </Tabs>
-            <TabContent index={activeTab} data={[...defaultData, ...dbData]} dbData={dbData}/>
+            <TabContent
+                index={activeTab}
+                data={sortedData}
+                dbData={dbData}/>
         </>
     );
 };
+
+export default React.memo(IT);

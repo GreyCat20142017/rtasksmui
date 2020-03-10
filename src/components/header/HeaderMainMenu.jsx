@@ -1,7 +1,7 @@
 import React from 'react';
 import {Hidden} from '@material-ui/core';
-import Submenu from '../submenu/Submenu';
-import {NavItem} from '../navitem/NavItem';
+
+import {NavItem, Submenu} from '../components';
 
 export const MainMenu = ({items}) => (
     <>

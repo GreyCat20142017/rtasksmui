@@ -2,22 +2,21 @@ import React, {useContext, useState} from 'react';
 import {Button, Divider, Typography} from '@material-ui/core';
 import {Add} from '@material-ui/icons';
 
-import FormDialog from '../form/FormDialog';
-import MUITable from '../../common/table/MUITable';
-import {Loader} from '../components';
+import {AlertDialog, Loader, FormDialog, MUITable} from '../components';
 import {DataContext} from '../../contexts/data/DataContext';
 import {UserContext} from '../../contexts/user/UserContext';
 import {IT_COLUMNS, ROWS_LIMIT} from '../../constants';
 
-const ItLSTable = () => {
+export const ItLSTable = () => {
     const [isFormOpen, setIsFormOpen] = useState(false);
-    const {dbData, isLoading, error, err, edited, setEdited,
-        editPoint, createPoint, updatePoint, deletePoint} = useContext(DataContext);
-
+    const {
+        dbData, isLoading, error, err, edited, setEdited,  editPoint, createPoint, updatePoint, deletePoint
+    } = useContext(DataContext);
+    const [alert, setAlert] = useState(false);
     const [{isLoggedIn}] = useContext(UserContext);
 
     const onDelete = (ind) => {
-        deletePoint(ind);
+        setAlert(ind);
     };
 
     const onCreate = () => {
@@ -40,7 +39,7 @@ const ItLSTable = () => {
     };
 
     const onEdit = (ind) => {
-       editPoint(ind);
+        editPoint(ind);
     };
 
     const actions = isLoggedIn ?
@@ -67,8 +66,10 @@ const ItLSTable = () => {
             {error && <Typography variant={'caption'} color={'error'}>{error}</Typography>}
             {err && <Typography variant={'caption'} color={'error'}>{err}</Typography>}
             <FormDialog isFormOpen={!!(isFormOpen || edited)} edited={edited} onClose={onClose} onSave={onSave}/>
+
+            {alert &&
+            <AlertDialog message={'Удалить точку?'} alert={alert} setAlert={setAlert} callback={deletePoint}/>
+            }
         </>
     );
 };
-
-export default ItLSTable;

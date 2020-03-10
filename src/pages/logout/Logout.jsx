@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Redirect} from 'react-router-dom';
-import {ROUTES} from '../../routes';
+
 import {UserContext} from '../../contexts/user/UserContext';
 import {useLocalStorage} from '../../hooks/customHooks';
+import {ROUTES} from '../../routes';
 import {LS_TOKEN, LS_TOKEN_EXPIRATION, LS_TOKEN_REFRESH} from '../../constants';
 
 export const Logout = () => {

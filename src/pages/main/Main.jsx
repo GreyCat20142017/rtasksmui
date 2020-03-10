@@ -1,6 +1,5 @@
 import React from 'react';
-import {Typography} from '@material-ui/core';
-import Container from '@material-ui/core/Container';
+import {Typography, Container} from '@material-ui/core';
 
 export const Main = () => (
     <>
@@ -12,10 +11,10 @@ export const Main = () => (
             <Typography variant='caption' component={'p'}>
                 Данные по умолчанию - берутся из json-файла.
                 Кроме этого, можно добавлять новые данные с сохранением в FireBase.
-                Данные, добавляемые пользователем можно изменять и удалять.
+                Данные, добавляемые пользователем, можно изменять и удалять.
             </Typography>
             <Typography variant='caption'>
-                Число точек графика задается в параметрах пагинации. При клике на точку
+                Выбор точек для построения графика осуществляется слайдером. При клике на точку
                 графика - вывыодятся детальные данные во всплывающей подсказке.
             </Typography>
         </Container>

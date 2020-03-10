@@ -6,6 +6,8 @@ import {Typography, Divider} from '@material-ui/core';
 import {CHART_CANVAS} from './chartconstants';
 import {getChartOptions} from './chartfunctions';
 
+Chart.defaults.global.animation.duration = 555;
+
 const MUILineChart = ({chart, setChart, data = [], chartTitle, chartFooter, onLegendClick, minY = 0}) => {
         const canvas = useRef(null);
 

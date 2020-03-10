@@ -1,9 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Container, Typography} from '@material-ui/core';
 import {Redirect} from 'react-router-dom';
+import {Container, Typography} from '@material-ui/core';
 
-import {Loader} from '../../components/components';
-import {AuthForm} from '../../components/authform/AuthForm';
+import {Loader, AuthForm} from '../../components/components';
 import {useUser} from '../../hooks/userHooks';
 import {useLocalStorage} from '../../hooks/customHooks';
 import {UserContext} from '../../contexts/user/UserContext';
@@ -60,7 +59,7 @@ export const SignIn = (props) => {
 
     return (
         <Container maxWidth={'sm'}>
-            {isLoggedIn && <Redirect to={ROUTES.PROFILE.href}/>}
+            {isLoggedIn && <Redirect to={ROUTES.IT.href}/>}
             {isLoading ?
                 <Loader message={'Вход в систему...'}/> :
                 <AuthForm isSignUp={false} onSuccess={onLogin} old={old}/>

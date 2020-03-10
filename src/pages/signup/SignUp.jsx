@@ -44,7 +44,7 @@ export const SignUp = (props) => {
 
     return (
         <Container maxWidth={'sm'}>
-            {isLoggedIn && <Redirect to={ROUTES.PROFILE.href}/>}
+            {isLoggedIn && <Redirect to={ROUTES.IT.href}/>}
             {isLoading ?
                 <Loader message={'Регистрация пользователя...'}/> :
                 <AuthForm isSignUp={true} onSuccess={onSignUp} old={old}/>

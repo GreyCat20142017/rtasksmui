@@ -1,9 +1,10 @@
 import React from 'react';
 import {Snackbar, IconButton} from '@material-ui/core';
+import {amber} from '@material-ui/core/colors';
 import CloseIcon from '@material-ui/icons/Close';
 import {makeStyles} from '@material-ui/core/styles';
-import { amber } from '@material-ui/core/colors';
-import {SNACK_OPEN_TIME} from '../constants';
+
+import {SNACK_OPEN_TIME} from '../../constants';
 
 const useStyles = makeStyles(theme => ({
     close: {
@@ -14,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SimpleSnackbar = ({open, message, onSnackClose}) => {
+export const SimpleSnackbar = ({open, message, onSnackClose}) => {
     const classes = useStyles();
     return (<Snackbar
         anchorOrigin={{
@@ -42,5 +43,3 @@ const SimpleSnackbar = ({open, message, onSnackClose}) => {
         ]}
     />);
 };
-
-export default SimpleSnackbar;

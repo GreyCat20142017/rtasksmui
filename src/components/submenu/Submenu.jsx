@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {Menu, MenuItem, Button} from '@material-ui/core';
 
-import {MUIIcon} from '../icon/MUIIcon';
+import {MUIIcon} from '../components';
 import {DARKPINK_COLOR, PINK_COLOR} from '../../theme';
 import {useStyles} from './Submenu.css';
 
-const Submenu = ({
+export const Submenu = ({
                      submenuItems = [], withNavLink = true, onLight = true, callback = null,
                      switchIcon = 'More', text = ''
                  }) => {
@@ -69,5 +69,3 @@ const Submenu = ({
         </>
     );
 };
-
-export default Submenu;

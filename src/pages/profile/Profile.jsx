@@ -2,9 +2,9 @@ import React, {useContext, useState} from 'react';
 import {Redirect} from 'react-router-dom';
 import {Tab, Tabs, Typography} from '@material-ui/core';
 
+import {ProfileForm} from './ProfileForm';
 import {SimpleTable} from '../../components/components';
 import {TabPanel} from './TabPanel';
-import {ProfileForm} from './ProfileForm';
 import {UserContext} from '../../contexts/user/UserContext';
 import {getClearedUserInfo} from '../../functions';
 import {ROUTES} from '../../routes';

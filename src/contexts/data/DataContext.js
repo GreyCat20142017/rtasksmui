@@ -1,7 +1,19 @@
 import React, {createContext, useEffect, useState} from 'react';
-import {useFetch, useLocalStorage} from '../../hooks/customHooks';
-import {API_PATH, AXIOS_TIMEOUT, LS_TOKEN} from '../../constants';
 import axios from 'axios';
+
+import {useFetch} from '../../hooks/customHooks';
+import {API_PATH, AXIOS_TIMEOUT, LS_TOKEN} from '../../constants';
+
+const getTransformedResponse = (obj) => {
+    const result = {};
+    const notTransform = ['id', 'date'];
+    Object.keys(obj).forEach(key => {
+        result[key] = (notTransform.indexOf(key) !== -1 ? obj[key] : parseInt(obj[key]));
+    });
+    return result;
+};
+
+const getToken = () => (localStorage.getItem(LS_TOKEN) || '');
 
 export const DataContext = createContext(null);
 
@@ -10,11 +22,10 @@ export const DataContextProvider = ({children}) => {
     const [edited, setEdited] = useState(null);
     const [err, setErr] = useState(null);
     const [{isLoading, response, error}, doFetch] = useFetch();
-    const [token] = useLocalStorage(LS_TOKEN);
 
     useEffect(() => {
         if (response) {
-            const res = Object.keys(response).map(key => ({...response[key], id: key}));
+            const res = Object.keys(response).map(key => (getTransformedResponse({...response[key], id: key})));
             setDbData(res);
         }
     }, [response]);
@@ -29,7 +40,7 @@ export const DataContextProvider = ({children}) => {
         try {
             const response = await axios.post(url, {...el}, {
                 timeout: AXIOS_TIMEOUT,
-                params: {'auth': token}
+                params: {'auth': getToken()}
             });
             const newPoint = {...el, id: response.data.name};
             setDbData([...dbData, newPoint]);
@@ -44,7 +55,7 @@ export const DataContextProvider = ({children}) => {
         try {
             await axios.put(url, {...el}, {
                 timeout: AXIOS_TIMEOUT,
-                params: {'auth': token}
+                params: {'auth': getToken()}
             });
             setDbData(dbData.map(item => (item['id'] === el['id'] ? el : item)));
         } catch (e) {
@@ -59,7 +70,7 @@ export const DataContextProvider = ({children}) => {
         try {
             await axios.delete(url, {
                 timeout: AXIOS_TIMEOUT,
-                params: {'auth': token}
+                params: {'auth': getToken()}
             });
             setDbData(dbData.filter(item => (item['id'] !== id)));
         } catch (e) {

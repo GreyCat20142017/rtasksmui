@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-
 import {Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, makeStyles} from '@material-ui/core';
-import {theme} from '../../theme';
+
 import ActionsHeaders from './actions/ActionsHeaders';
 import ActionsCells from './actions/ActionsCells';
-import {getTranslate, NF} from '../../components/chart/chartfunctions';
+import {getTranslate, NF} from '../chart/chartfunctions';
 import {ROWS_PER_PAGE_OPTIONS} from '../../constants';
+import {theme} from '../../theme';
 
 const useStyles = () => makeStyles({
     root: {
@@ -18,26 +18,24 @@ const useStyles = () => makeStyles({
     }
 });
 
-
-const isNumber = (value) => (typeof(value) === 'number');
+const isNumber = (value) => (typeof (value) === 'number');
 
 const getFormatted = (value) => (isNumber(value) ? NF.format(value) : value);
 
 const getCell = (row, column, rowIndex) => getFormatted((row[column]) || (column === 'id' ? rowIndex + 1 : ''));
 
-const getAlign = (aligns = {}, column) => (aligns[column] ? aligns[column] : 'left');
+const getAlign = (aligns = {}, column, defaultAlign) => (aligns[column] ? aligns[column] : defaultAlign);
 
-const getHoverTitle = (row, hoverField) => (
-    hoverField && row[hoverField] ? hoverField + ' : ' + row[hoverField] : ''
-);
-
+const getHoverTitle = (row, hoverField) => (hoverField && row[hoverField] ? hoverField + ' : ' + row[hoverField] : '');
 
 /**
  * @param actions = {'delete: {'title' : 'удалить',  icon: 'Delete', callback: }}
  */
 
-const MUITable = ({data, columns, rowsLimit = 10, size = 'small', maxWidth = '100%',
-                      hoverField = null, actions = null, aligns = {}}) => {
+export const MUITable = ({
+                      data, columns, rowsLimit = 10, size = 'small', maxWidth = '100%',
+                      hoverField = null, actions = null, aligns = {}, defaultAlign = 'left'
+                  }) => {
     const classes = useStyles(maxWidth);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(rowsLimit);
@@ -59,7 +57,7 @@ const MUITable = ({data, columns, rowsLimit = 10, size = 'small', maxWidth = '10
                         <TableHead>
                             <TableRow>
                                 {columns.map((column, ind) => (
-                                    <TableCell key={ind} align={getAlign(aligns, column)}>
+                                    <TableCell key={ind} align={getAlign(aligns, column, defaultAlign)}>
                                         {getTranslate(column)}
                                     </TableCell>
                                 ))}
@@ -72,7 +70,7 @@ const MUITable = ({data, columns, rowsLimit = 10, size = 'small', maxWidth = '10
                                     <TableRow key={rowInd} title={getHoverTitle(row, hoverField)}>
                                         {columns.map((column, ind) => (
                                                 <TableCell key={rowInd + '_' + ind}
-                                                           align={getAlign(aligns, column)}>
+                                                           align={getAlign(aligns, column, defaultAlign)}>
                                                     {getCell(row, column, rowInd + rowsPerPage * page)}
                                                 </TableCell>
                                             )
@@ -97,5 +95,3 @@ const MUITable = ({data, columns, rowsLimit = 10, size = 'small', maxWidth = '10
         </div>
     );
 };
-
-export default MUITable;

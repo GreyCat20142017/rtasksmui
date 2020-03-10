@@ -1,13 +1,10 @@
 import React from 'react';
-
 import {Button, Divider, Typography} from '@material-ui/core';
 import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@material-ui/core';
 
-import Form from './Form';
+import {Form} from './Form';
 
-const FormDialog = ({isFormOpen = false, edited = null, onClose, onSave}) => {
-
-
+export const FormDialog = ({isFormOpen = false, edited = null, onClose, onSave}) => {
     return (
         <Dialog open={isFormOpen} onClose={onClose} aria-labelledby='form-dialog-title'>
             <DialogTitle id='form-dialog-title'>Добавление новой точки</DialogTitle>
@@ -30,5 +27,3 @@ const FormDialog = ({isFormOpen = false, edited = null, onClose, onSave}) => {
         </Dialog>
     );
 };
-
-export default FormDialog;

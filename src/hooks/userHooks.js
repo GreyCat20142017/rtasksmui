@@ -4,16 +4,6 @@ import axios from 'axios';
 import {useLocalStorage} from './customHooks';
 import {BASE_URL, LS_TOKEN} from '../constants';
 
-const getHeaders = (token) => {
-    const headers = {};
-    if (token) {
-        // headers['Authorization'] = `Bearer ${token}`;
-    } else {
-        // headers['Accept'] = 'application/json';
-    }
-    return headers;
-};
-
 export const useUser = (url) => {
     const [isLoading, setIsLoading] = useState(false);
     const [response, setResponse] = useState(null);
@@ -34,7 +24,6 @@ export const useUser = (url) => {
 
         const requestOptions = {
             ...options,
-            headers: getHeaders(token),
             url: BASE_URL + url
         };
 

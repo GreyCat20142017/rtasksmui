@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {Button, TextField, Typography} from '@material-ui/core';
 import is from 'is_js';
 
+const PASSWORD_MIN_LENGTH = 6;
+
 export const AuthForm = ({onSuccess, isSignUp = false, old = ''}) => {
     const [email, setEmail] = useState(old);
     const [password, setPassword] = useState('');
@@ -10,14 +12,14 @@ export const AuthForm = ({onSuccess, isSignUp = false, old = ''}) => {
     const [touched, setTouched] = useState(false);
 
     const title = isSignUp ? 'Регистрация' : 'Вход';
-    const errorMessage = 'Все поля должны быть заполнены! Email быть валидным! Пароль не менее 6 символов! ' +
-        (isSignUp ? ' Повтор пароля должен совпадать с паролем!' : '');
+    const errorMessage = 'Все поля должны быть заполнены! Email быть валидным! Пароль не менее ' +
+        PASSWORD_MIN_LENGTH + ' символов! ' + (isSignUp ? ' Повтор пароля должен совпадать с паролем!' : '');
 
     const onInputChange = (value, setter) => setter(value);
 
     const onSubmit = (evt) => {
         evt.preventDefault();
-        const ok = is.email(email) && (password.trim().length >= 6 &&
+        const ok = is.email(email) && (password.trim().length >= PASSWORD_MIN_LENGTH &&
             ((isSignUp && (passwordRepeat === password)) || (!isSignUp)));
         setFormError(ok ? null : errorMessage);
         setTouched(true);
@@ -36,13 +38,13 @@ export const AuthForm = ({onSuccess, isSignUp = false, old = ''}) => {
                 onChange={(evt) => onInputChange(evt.target.value, setEmail)}/>
             <TextField
                 required id='password' name='password' label={'пароль'} value={password} fullWidth margin='normal'
-                error={touched && password.trim().length < 6} type={'password'}
+                error={touched && password.trim().length < PASSWORD_MIN_LENGTH} type={'password'}
                 onChange={(evt) => onInputChange(evt.target.value, setPassword)}/>
             {isSignUp &&
             <TextField
                 required id='password' name='passwordRepeat' label={'повтор пароля'} value={passwordRepeat} fullWidth
-                margin='normal'
-                error={touched && (passwordRepeat.trim().length < 6 || passwordRepeat !== password)}
+                margin='normal' type={'password'}
+                error={touched && (passwordRepeat.trim().length < PASSWORD_MIN_LENGTH || passwordRepeat !== password)}
                 onChange={(evt) => onInputChange(evt.target.value, setPasswordRepeat)}/>
             }
             <Button variant={'contained'} color={'primary'} onClick={onSubmit} fullWidth title={'title'}>

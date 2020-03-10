@@ -1,11 +1,33 @@
-import React, {useEffect, useState} from 'react';
-import {Typography, Divider, TablePagination} from '@material-ui/core';
+import React, {useCallback, useEffect, useState} from 'react';
+import {Typography, Divider, Slider, Container} from '@material-ui/core';
 import MoodBadIcon from '@material-ui/icons/MoodBad';
 
 import MUILineChart from './MUILineChart';
-import SimpleSnackbar from '../../common/SimpleSnackbar';
+import {SimpleSnackbar} from '../components';
 import {getPreparedData, NF} from './chartfunctions';
-import {POINT_LIMIT, ROWS_PER_PAGE_OPTIONS} from '../../constants';
+import {LABELS_LIMIT, POINT_LIMIT} from '../../constants';
+import {isValidIndex} from '../../functions';
+import {useStyles} from './ItChart.css';
+
+const getLabelIndexes = (data) => {
+    const limitFactor = data.length > LABELS_LIMIT ? Math.ceil(data.length / 3) : 1;
+    const result = (limitFactor === 1) ? null :
+        [...data.map((item, ind) => (ind % limitFactor === 0) ? ind : -1).filter(item => (item !== -1)),
+            data.length - 1
+        ];
+    return result;
+};
+
+const getSlicedData = (data, [first, last]) => (
+    isValidIndex(first - 1, data) && isValidIndex(last - 1, data) ?
+        data.slice(first - 1, last) : [...data]
+);
+
+const getComment = (data, [first, last]) => (
+    isValidIndex(first - 1, data) && isValidIndex(last - 1, data) ?
+        `Выбран период с ${data[first - 1]['date']} по ${data[last - 1]['date']}. Количество точек: ${last - first + 1}` :
+        ''
+);
 
 const getMessage = (row) => (
     row ?
@@ -19,28 +41,29 @@ const getMessage = (row) => (
         null
 );
 
-const ItChart = ({data, columns, chartTitle = 'График', minY = 0}) => {
+export const ItChart = ({data, columns, chartTitle = 'График', minY = 0}) => {
     const [message, setMessage] = useState(null);
     const [chart, setChart] = useState(null);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(POINT_LIMIT);
-    const [preparedData, setPreparedData] = useState(getPreparedData(data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage), columns, minY));
+    const [marks, setMarks] = useState([]);
+    const [limits, setLimits] = useState([1, Math.min(POINT_LIMIT, data.length)]);
+    const [preparedData, setPreparedData] = useState(getPreparedData(data, columns, minY));
+    const classes = useStyles();
+
+    const refreshData = useCallback((first, last) => {
+        const filteredData = getSlicedData(data, [first, last]);
+        setPreparedData(getPreparedData(filteredData, columns, minY));
+        const labelIndexes = getLabelIndexes(data);
+        const preparedMarks = data.map((item, ind) => ({
+            value: ind + 1,
+            label: !labelIndexes || (labelIndexes.indexOf(ind) === -1) ? '' : item['date']
+        }));
+        setMarks(preparedMarks);
+    }, [data, columns, minY])
 
     useEffect(() => {
-        setPreparedData(
-            getPreparedData(data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage), columns, minY)
-        );
-
-    }, [data, page, rowsPerPage, setPreparedData, columns, minY]);
-
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
-
-    const handleChangeRowsPerPage = event => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
-    };
+        setLimits([1, Math.min(POINT_LIMIT, data.length)]);
+        refreshData([1, Math.min(POINT_LIMIT, data.length)]);
+    }, [data, refreshData]);
 
     const onLegendClick = (ind) => {
         setMessage(data[ind] ? getMessage(data[ind]) : null);
@@ -53,8 +76,14 @@ const ItChart = ({data, columns, chartTitle = 'График', minY = 0}) => {
         setMessage(null);
     };
 
+    const onSliderChange = (evt, newValue) => {
+        setLimits(() => [...newValue]);
+        const filteredData = getSlicedData(data, newValue);
+        setPreparedData(getPreparedData(filteredData, columns, minY));
+    };
+
     return (
-        <>
+        <Container>
             <MUILineChart chart={chart} setChart={setChart}
                           data={preparedData} minY={minY}
                           chartTitle={chartTitle}
@@ -66,18 +95,22 @@ const ItChart = ({data, columns, chartTitle = 'График', minY = 0}) => {
             <Typography variant={'caption'}>
                 Для просмотра детальной информации по одной точке графика нужно кликнуть по ней мышью
             </Typography>
-            <TablePagination size={'small'}
-                             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
-                             labelRowsPerPage={'Точек на страницу:'}
-                             component="div"
-                             count={data.length}
-                             rowsPerPage={rowsPerPage}
-                             page={page}
-                             onChangePage={handleChangePage}
-                             onChangeRowsPerPage={handleChangeRowsPerPage}/>
+            <div className={classes.sliderWrapper}>
+                <Slider classes={{markLabel: classes.mark}}
+                        track="inverted"
+                        aria-labelledby="slider"
+                        title={'Слайдер для ограничения точек графика'}
+                        value={[...limits]}
+                        valueLabelDisplay={'auto'}
+                        min={1}
+                        max={data.length}
+                        marks={marks}
+                        onChangeCommitted={onSliderChange}
+                />
+            </div>
+            <Typography className={classes.comment} variant={'subtitle2'}
+                        color={'primary'}>{getComment(data, limits)}</Typography>
 
-        </>
+        </Container>
     );
 };
-
-export default ItChart;

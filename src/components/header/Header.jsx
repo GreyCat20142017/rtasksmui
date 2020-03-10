@@ -1,13 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {AppBar, Chip, Container, Toolbar} from '@material-ui/core';
 
+import {Submenu, HeaderMainMenu, MUIIcon} from '../components';
 import {UserContext} from '../../contexts/user/UserContext';
 import {HIDE_WHEN, ROUTES} from '../../routes';
 import {getUserInfo} from '../../functions';
-import {HeaderMainMenu} from './HeaderMainMenu';
-import Submenu from '../submenu/Submenu';
-import {MUIIcon} from '../icon/MUIIcon';
-
 
 const getMenuByRoutes = (userSubmenu = false, isLoggedIn = false) => (
     Object.keys(ROUTES).filter(key => (!!(ROUTES[key]['userSubmenu']) === userSubmenu &&
