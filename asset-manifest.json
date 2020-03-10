@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/rtasksmui/static/js/main.535672ae.chunk.js",
-    "main.js.map": "/rtasksmui/static/js/main.535672ae.chunk.js.map",
+    "main.js": "/rtasksmui/static/js/main.27d977cd.chunk.js",
+    "main.js.map": "/rtasksmui/static/js/main.27d977cd.chunk.js.map",
     "runtime-main.js": "/rtasksmui/static/js/runtime-main.d2c33a9d.js",
     "runtime-main.js.map": "/rtasksmui/static/js/runtime-main.d2c33a9d.js.map",
-    "static/js/2.60ae2741.chunk.js": "/rtasksmui/static/js/2.60ae2741.chunk.js",
-    "static/js/2.60ae2741.chunk.js.map": "/rtasksmui/static/js/2.60ae2741.chunk.js.map",
+    "static/js/2.63e410bc.chunk.js": "/rtasksmui/static/js/2.63e410bc.chunk.js",
+    "static/js/2.63e410bc.chunk.js.map": "/rtasksmui/static/js/2.63e410bc.chunk.js.map",
     "index.html": "/rtasksmui/index.html",
-    "precache-manifest.bafc3de6ca923bee557e2ace905fd21d.js": "/rtasksmui/precache-manifest.bafc3de6ca923bee557e2ace905fd21d.js",
+    "precache-manifest.83954e0f1fd83c3c87b6d3ddd9cd3e84.js": "/rtasksmui/precache-manifest.83954e0f1fd83c3c87b6d3ddd9cd3e84.js",
     "service-worker.js": "/rtasksmui/service-worker.js",
-    "static/js/2.60ae2741.chunk.js.LICENSE": "/rtasksmui/static/js/2.60ae2741.chunk.js.LICENSE"
+    "static/js/2.63e410bc.chunk.js.LICENSE": "/rtasksmui/static/js/2.63e410bc.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.d2c33a9d.js",
-    "static/js/2.60ae2741.chunk.js",
-    "static/js/main.535672ae.chunk.js"
+    "static/js/2.63e410bc.chunk.js",
+    "static/js/main.27d977cd.chunk.js"
   ]
 }
