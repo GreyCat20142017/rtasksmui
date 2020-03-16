@@ -76,3 +76,5 @@ export const PROFILE_DATE_FIELDS = ['lastLoginAt', 'createdAt'];
 export const WRITABLE_PROFILE_FIELDS =  ['displayName', 'photoUrl'];
 
 export const AXIOS_TIMEOUT = 7000;
+
+export const FILTER_ALL = 'все точки';

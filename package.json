@@ -1,7 +1,8 @@
 {
   "name": "rtasksmui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
+  "homepage": "https://greycat20142017.github.io/rtasksmui",
   "dependencies": {
     "@material-ui/core": "^4.7.2",
     "@material-ui/lab": "^4.0.0-alpha.27",

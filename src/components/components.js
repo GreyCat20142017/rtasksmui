@@ -12,3 +12,4 @@ export {AlertDialog} from './alert/AlertDialog';
 export {SimpleTable} from './simpletable/SimpleTable';
 export {SimpleSnackbar} from './snackbar/SimpleSnackbar';
 export {NavItem} from './navitem/NavItem';
+export {MUISelect} from './select/MUISelect';
