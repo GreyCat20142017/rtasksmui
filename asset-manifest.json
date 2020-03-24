@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/rtasksmui/static/js/main.8fde312d.chunk.js",
-    "main.js.map": "/rtasksmui/static/js/main.8fde312d.chunk.js.map",
+    "main.js": "/rtasksmui/static/js/main.97c518d2.chunk.js",
+    "main.js.map": "/rtasksmui/static/js/main.97c518d2.chunk.js.map",
     "runtime-main.js": "/rtasksmui/static/js/runtime-main.d2c33a9d.js",
     "runtime-main.js.map": "/rtasksmui/static/js/runtime-main.d2c33a9d.js.map",
     "static/js/2.2c159389.chunk.js": "/rtasksmui/static/js/2.2c159389.chunk.js",
     "static/js/2.2c159389.chunk.js.map": "/rtasksmui/static/js/2.2c159389.chunk.js.map",
     "index.html": "/rtasksmui/index.html",
-    "precache-manifest.4b1e201a24e80ca14f17435a3e8d2d67.js": "/rtasksmui/precache-manifest.4b1e201a24e80ca14f17435a3e8d2d67.js",
+    "precache-manifest.c0717002a4235767f68c11f55a24bbb6.js": "/rtasksmui/precache-manifest.c0717002a4235767f68c11f55a24bbb6.js",
     "service-worker.js": "/rtasksmui/service-worker.js",
     "static/js/2.2c159389.chunk.js.LICENSE": "/rtasksmui/static/js/2.2c159389.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.d2c33a9d.js",
     "static/js/2.2c159389.chunk.js",
-    "static/js/main.8fde312d.chunk.js"
+    "static/js/main.97c518d2.chunk.js"
   ]
 }
